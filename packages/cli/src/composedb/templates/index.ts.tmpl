@@ -1,0 +1,142 @@
+import { LoadOpts } from '@ceramicnetwork/common'
+import { CeramicClient } from '@ceramicnetwork/http-client'
+import { StreamID } from '@ceramicnetwork/streamid'
+import { ComposeClient } from '@composedb/client'
+import { ModelInstanceDocument } from '@composedb/types'
+import { Prisma, PrismaClient } from '@prisma/client'
+import { DID } from 'dids'
+import { DocumentNode } from 'graphql'
+import { AnyZodObject } from 'zod'
+import { definition } from '../composites/index.js'
+import { Expand, removeNullFields } from './utils.js'
+${SERVICE_IMPORTS}
+
+export interface Stream {
+  stream_id: string
+  controller_did: string
+  stream_content: Prisma.JsonValue
+  tip: string
+  last_anchored_at: Date | null
+  first_anchored_at: Date | null
+  created_at: Date
+  updated_at: Date
+}
+export type ContentStream<TStream, TContent> = Expand<
+  Omit<TStream, 'stream_content'> & {
+    stream_content: TContent
+  }
+>
+
+export interface Result<T> {
+  data?: T
+  errors?: Error[]
+}
+
+export interface ClientParams {
+  ceramicURL: string
+  did?: DID
+  prisma?: PrismaClient
+}
+
+export class ComposeDB {
+  readonly prisma: PrismaClient
+  readonly ceramic: CeramicClient
+  readonly composedb: ComposeClient
+
+  ${SERVICE_PROPERTIES}
+
+  private _did = new DID()
+  private _errors: Error[] = []
+
+  constructor(params: Expand<ClientParams>) {
+    this.prisma = params.prisma || new PrismaClient()
+    this.ceramic = new CeramicClient(params.ceramicURL)
+    this.composedb = new ComposeClient({
+      ceramic: this.ceramic,
+      definition: definition,
+    })
+    this.did = params.did || new DID()
+
+    ${SERVICE_CONSTRUCTOR}
+  }
+
+  get did() {
+    return this._did
+  }
+
+  set did(did: DID) {
+    this._did = did
+    this.ceramic.did = did
+    this.composedb.setDID(did)
+  }
+
+  isConnected(): boolean {
+    return (
+      !!this.ceramic.did &&
+      !!this.composedb.did &&
+      this._did.authenticated &&
+      this._did.hasCapability
+    )
+  }
+
+  disconnect() {
+    this.did = new DID()
+  }
+
+  errors(): Error[] {
+    const errors = this._errors
+    this._errors = []
+    return errors
+  }
+
+  async composeQuery<TQuery>(
+    document: DocumentNode,
+    vars?: Record<string, unknown>
+  ): Promise<TQuery> {
+    const result = await this.composedb.execute<TQuery>(document, vars)
+    if (result.errors) {
+      console.error(result.errors)
+      throw new Error(result.errors.join(','))
+    }
+    return result.data as TQuery
+  }
+
+  async composeMutation<TInput, TMutation>(
+    document: DocumentNode,
+    input: TInput,
+    schema: AnyZodObject
+  ): Promise<TMutation> {
+    const parsed = schema.safeParse(input)
+    if (parsed.success) {
+      input = parsed.data as TInput
+    } else {
+      console.error(parsed.error)
+      throw parsed.error
+    }
+    input = removeNullFields(input)
+    const result = await this.composedb.execute<TMutation>(document, {
+      input,
+    })
+    if (result.errors) {
+      console.error(result.errors)
+      throw new Error(result.errors.join(','))
+    }
+    return result.data as TMutation
+  }
+
+  async loadStream<TContent>(
+    id?: string,
+    opts?: LoadOpts
+  ): Promise<ModelInstanceDocument<TContent>> {
+    if (!id) throw new Error('id cannot be null')
+    try {
+      const result = await this.ceramic.loadStream<
+        ModelInstanceDocument<TContent>
+      >(StreamID.fromString(id), opts)
+      return result
+    } catch (e) {
+      console.error(e)
+      throw e
+    }
+  }
+}

@@ -1,0 +1,126 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearch", "filteredRelationCount", "fieldReference"]
+}
+
+datasource db {
+  provider     = "postgresql"
+  url          = env("COMPOSEDB_POSTGRES_URL")
+  relationMode = "prisma"
+}
+
+model UserStream {
+  stream_id         String    @id(map: "idx_mz7gz2jxm5_pkey") @unique(map: "constr_mz7gz2jxm5_unique") @db.VarChar(255)
+  controller_did    String    @db.VarChar(1024)
+  stream_content    Json
+  tip               String    @db.VarChar(255)
+  last_anchored_at  DateTime? @db.Timestamptz(6)
+  first_anchored_at DateTime? @db.Timestamptz(6)
+  created_at        DateTime  @default(now()) @db.Timestamptz(6)
+  updated_at        DateTime  @default(now()) @db.Timestamptz(6)
+
+  @@index([created_at], map: "idx_mz7gz2jxm5_created_at")
+  @@index([first_anchored_at], map: "idx_mz7gz2jxm5_first_anchored_at")
+  @@index([last_anchored_at], map: "idx_mz7gz2jxm5_last_anchored_at")
+  @@index([last_anchored_at, created_at], map: "idx_mz7gz2jxm5_last_anchored_at_created_at")
+  @@index([stream_id], map: "idx_mz7gz2jxm5_stream_id")
+  @@index([updated_at], map: "idx_mz7gz2jxm5_updated_at")
+  @@map("kjzl6hvfrbw6c78pvix2gc3vgx5qp9gdvnqrkbstorpj4r49co00mmz7gz2jxm5")
+}
+
+model SubjectPKPStream {
+  stream_id         String    @id(map: "idx_abxzkm4pnc_pkey") @unique(map: "constr_abxzkm4pnc_unique") @db.VarChar(255)
+  controller_did    String    @db.VarChar(1024)
+  stream_content    Json
+  tip               String    @db.VarChar(255)
+  last_anchored_at  DateTime? @db.Timestamptz(6)
+  first_anchored_at DateTime? @db.Timestamptz(6)
+  created_at        DateTime  @default(now()) @db.Timestamptz(6)
+  updated_at        DateTime  @default(now()) @db.Timestamptz(6)
+
+  @@index([created_at], map: "idx_abxzkm4pnc_created_at")
+  @@index([first_anchored_at], map: "idx_abxzkm4pnc_first_anchored_at")
+  @@index([last_anchored_at], map: "idx_abxzkm4pnc_last_anchored_at")
+  @@index([last_anchored_at, created_at], map: "idx_abxzkm4pnc_last_anchored_at_created_at")
+  @@index([stream_id], map: "idx_abxzkm4pnc_stream_id")
+  @@index([updated_at], map: "idx_abxzkm4pnc_updated_at")
+  @@map("kjzl6hvfrbw6c8lolcne391kapbnrw61j8knwxy0x5gfsi7an8rhiabxzkm4pnc")
+}
+
+model EntryStream {
+  stream_id         String    @id(map: "idx_v5xn5c67e7_pkey") @unique(map: "constr_v5xn5c67e7_unique") @db.VarChar(255)
+  controller_did    String    @db.VarChar(1024)
+  stream_content    Json
+  tip               String    @db.VarChar(255)
+  last_anchored_at  DateTime? @db.Timestamptz(6)
+  first_anchored_at DateTime? @db.Timestamptz(6)
+  created_at        DateTime  @default(now()) @db.Timestamptz(6)
+  updated_at        DateTime  @default(now()) @db.Timestamptz(6)
+
+  @@index([created_at], map: "idx_v5xn5c67e7_created_at")
+  @@index([first_anchored_at], map: "idx_v5xn5c67e7_first_anchored_at")
+  @@index([last_anchored_at], map: "idx_v5xn5c67e7_last_anchored_at")
+  @@index([last_anchored_at, created_at], map: "idx_v5xn5c67e7_last_anchored_at_created_at")
+  @@index([stream_id], map: "idx_v5xn5c67e7_stream_id")
+  @@index([updated_at], map: "idx_v5xn5c67e7_updated_at")
+  @@map("kjzl6hvfrbw6c52wzzixt2bffwuqwtfg6iyrq3oxw6y4glqi9cufcv5xn5c67e7")
+}
+
+model ListStream {
+  stream_id         String                   @id(map: "idx_m2nmd3nsda_pkey") @unique(map: "constr_m2nmd3nsda_unique") @db.VarChar(255)
+  controller_did    String                   @db.VarChar(1024)
+  stream_content    Json
+  tip               String                   @db.VarChar(255)
+  last_anchored_at  DateTime?                @db.Timestamptz(6)
+  first_anchored_at DateTime?                @db.Timestamptz(6)
+  created_at        DateTime                 @default(now()) @db.Timestamptz(6)
+  updated_at        DateTime                 @default(now()) @db.Timestamptz(6)
+  permissionedlists PermissionedListStream[] @relation("listid")
+
+  @@index([created_at], map: "idx_m2nmd3nsda_created_at")
+  @@index([first_anchored_at], map: "idx_m2nmd3nsda_first_anchored_at")
+  @@index([last_anchored_at], map: "idx_m2nmd3nsda_last_anchored_at")
+  @@index([last_anchored_at, created_at], map: "idx_m2nmd3nsda_last_anchored_at_created_at")
+  @@index([stream_id], map: "idx_m2nmd3nsda_stream_id")
+  @@index([updated_at], map: "idx_m2nmd3nsda_updated_at")
+  @@map("kjzl6hvfrbw6ca3yyqjjdioj8ligyf3z7gjxzzree8ep6g1i5j0w2m2nmd3nsda")
+}
+
+model PermissionedListStream {
+  stream_id         String      @id(map: "idx_mscvl3lgrt_pkey") @unique(map: "constr_mscvl3lgrt_unique") @db.VarChar(255)
+  controller_did    String      @db.VarChar(1024)
+  stream_content    Json
+  tip               String      @db.VarChar(255)
+  last_anchored_at  DateTime?   @db.Timestamptz(6)
+  first_anchored_at DateTime?   @db.Timestamptz(6)
+  created_at        DateTime    @default(now()) @db.Timestamptz(6)
+  updated_at        DateTime    @default(now()) @db.Timestamptz(6)
+  listId            String      @db.VarChar(1024)
+  list              ListStream? @relation("listid", fields: [listId], references: [stream_id], map: "list-listId")
+
+  @@index([listId], map: "idx_kjzl6hvfrbw6cale33s974rq76gaj0oqss4vegm03ki51u6dkffclmscvl3")
+  @@index([created_at], map: "idx_mscvl3lgrt_created_at")
+  @@index([first_anchored_at], map: "idx_mscvl3lgrt_first_anchored_at")
+  @@index([last_anchored_at], map: "idx_mscvl3lgrt_last_anchored_at")
+  @@index([last_anchored_at, created_at], map: "idx_mscvl3lgrt_last_anchored_at_created_at")
+  @@index([stream_id], map: "idx_mscvl3lgrt_stream_id")
+  @@index([updated_at], map: "idx_mscvl3lgrt_updated_at")
+  @@map("kjzl6hvfrbw6cale33s974rq76gaj0oqss4vegm03ki51u6dkffclmscvl3lgrt")
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+model ceramic_config {
+  network String @db.VarChar(1024)
+
+  @@ignore
+}
+
+model ceramic_models {
+  model      String   @id @unique(map: "ceramic_models_model_unique") @db.VarChar(1024)
+  is_indexed Boolean  @default(true)
+  created_at DateTime @default(now()) @db.Timestamptz(6)
+  updated_at DateTime @default(now()) @db.Timestamptz(6)
+  updated_by String   @db.VarChar(1024)
+
+  @@index([is_indexed], map: "idx_ceramic_is_indexed")
+}

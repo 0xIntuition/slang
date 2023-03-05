@@ -1,0 +1,12 @@
+type ImageSources {
+  original: ImageMetadata!
+  alternatives: [ImageMetadata] @list(minLength: 1, maxLength: 12)
+}
+
+type ImageMetadata {
+  src: String! @string(maxLength: 360)
+  mimeType: String! @string(maxLength: 50)
+  width: Int! @int(min: 1)
+  height: Int! @int(min: 1)
+  size: Int @int(min: 1)
+}

@@ -1,0 +1,69 @@
+{
+  "name": "@0xintuition/slang",
+  "version": "0.0.1",
+  "type": "module",
+  "scripts": {
+    "build": "rm -rf dist && tsc && cp -r src/composedb/templates dist/composedb",
+    "generate": "ts-node src/index.ts generate"
+  },
+  "main": "dist/index.js",
+  "bin": "dist/index.js",
+  "files": [
+    "dist",
+    "package.json"
+  ],
+  "devDependencies": {
+    "@composedb/devtools": "^0.3.1",
+    "@composedb/devtools-node": "^0.3.1",
+    "@types/chalk-animation": "^1.6.1",
+    "bun-types": "^0.5.0",
+    "prettier-plugin-organize-imports": "^3.2.2",
+    "tsup": "^6.6.3",
+    "typescript": "^4.9.5"
+  },
+  "peerDependencies": {
+    "prisma": "*",
+    "@ceramicnetwork/common": "^2.8.0",
+    "@ceramicnetwork/http-client": "^2.5.0",
+    "@ceramicnetwork/streamid": "^2.10.0",
+    "@composedb/client": "^0.3.1",
+    "@composedb/types": "^0.3.1",
+    "dids": "^3.2.0",
+    "graphql": "^16.6.0",
+    "zod": "^3.20.6"
+  },
+  "dependencies": {
+    "@composedb/client": "^0.4.3",
+    "@didtools/cacao": "^1.0.0",
+    "@graphql-codegen/add": "^4.0.1",
+    "@graphql-codegen/cli": "^3.2.1",
+    "@graphql-codegen/plugin-helpers": "^4.0.0",
+    "@graphql-codegen/typescript-operations": "^3.0.1",
+    "@graphql-tools/graphql-file-loader": "^7.5.16",
+    "@graphql-tools/load": "^7.8.12",
+    "@graphql-tools/utils": "^9.2.1",
+    "@lit-protocol/constants": "^2.1.43",
+    "@lit-protocol/contracts-sdk": "2.1.30",
+    "@lit-protocol/lit-node-client": "^2.1.43",
+    "@prisma/client": "^4.11.0",
+    "@stablelib/random": "^1.0.2",
+    "@tuplo/envsubst": "^1.15.2",
+    "alchemy-sdk": "^2.4.3",
+    "chalk": "^5.2.0",
+    "chalk-animation": "^2.0.3",
+    "did-session": "^1.0.0",
+    "dids": "^4.0.0",
+    "dotenv": "^16.0.3",
+    "ethers": "^5.7.0",
+    "google-auth-library": "^8.7.0",
+    "graphql": "^16.6.0",
+    "graphql-codegen-typescript-validation-schema": "^0.7.1",
+    "graphql-tag": "^2.12.6",
+    "type-flag": "^3.0.0",
+    "uint8arrays": "3.1.1",
+    "zod": "^3.20.6"
+  },
+  "resolutions": {
+    "uint8arrays": "^3.0.0"
+  }
+}
