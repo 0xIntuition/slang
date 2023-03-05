@@ -2,13 +2,7 @@ import { CeramicClient } from '@ceramicnetwork/http-client'
 import chalk from 'chalk'
 import chalkAnimation from 'chalk-animation'
 // @ts-ignore
-import { fromString } from 'uint8arrays/from-string'
-import { DID } from 'dids'
-import { Ed25519Provider } from 'key-did-provider-ed25519'
-import { getResolver } from 'key-did-resolver'
-import { readdir, readFile, writeFile } from 'fs/promises'
 import { Composite } from '@composedb/devtools'
-import path from 'path'
 import {
   mergeEncodedComposites,
   readEncodedComposite,
@@ -16,30 +10,36 @@ import {
   writeEncodedCompositeRuntime,
 } from '@composedb/devtools-node'
 import { RuntimeCompositeDefinition } from '@composedb/types'
-import { parse, visit } from 'graphql'
-import { execSync } from 'child_process'
-import { existsSync, mkdirSync } from 'fs'
-import { typeFlag } from 'type-flag'
+import * as addPlugin from '@graphql-codegen/add'
 import { CodegenConfig, generate } from '@graphql-codegen/cli'
 import { CodegenPlugin } from '@graphql-codegen/plugin-helpers'
 import * as typescriptPlugin from '@graphql-codegen/typescript'
 import * as typescriptOperationsPlugin from '@graphql-codegen/typescript-operations'
+import { execSync } from 'child_process'
+import { DID } from 'dids'
+import { existsSync, mkdirSync } from 'fs'
+import { readdir, readFile, writeFile } from 'fs/promises'
+import { parse, visit } from 'graphql'
 import * as typescriptValidationPlugin from 'graphql-codegen-typescript-validation-schema'
-import * as addPlugin from '@graphql-codegen/add'
+import { Ed25519Provider } from 'key-did-provider-ed25519'
+import { getResolver } from 'key-did-resolver'
+import path, { dirname } from 'path'
+import { typeFlag } from 'type-flag'
+// @ts-ignore
+import { fromString } from 'uint8arrays/from-string'
 import { fileURLToPath } from 'url'
-import { dirname } from 'path'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 
-const log = console.log
+const log = (str: string) => console.log(chalk.gray(str))
 const error = chalk.bold.red
 const animate = chalkAnimation.glitch
 
 export const ComposeDBFlags = typeFlag({
   outDir: {
     type: String,
-    default: path.join(process.cwd(), '__generated__'),
+    default: path.join(process.cwd(), '__generated__', 'composedb'),
   },
   modelFolder: {
     type: String,
@@ -55,7 +55,7 @@ export const ComposeDBFlags = typeFlag({
   },
   clientFolder: {
     type: String,
-    default: 'composedb',
+    default: 'client',
   },
   deploy: {
     type: Boolean,
@@ -107,6 +107,9 @@ export class ComposeDB {
   }
 
   private run = async (args: ComposeDBArgs) => {
+    log(
+      chalk.greenBright(`--COMPOSEDB-----------------------------------------`)
+    )
     log(`initializing directories...`)
     if (!existsSync(args.outDir)) {
       mkdirSync(args.outDir)
