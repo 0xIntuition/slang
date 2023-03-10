@@ -22,13 +22,15 @@ COMPOSEDB_POSTGRES_URL="postgres://<username>:<password>@<url>:<port>/<db>"
 COMPOSEDB_PRIVATE_KEY=<your_composedb_private_key>
 ```
 
-1. Define a `/models` folder at the root of your package/repository, with all files ordered in the way they are to be deployed.
+2. Define a `/models` folder at the root of your package/repository, with all files ordered in the way they are to be deployed.
 
-1. Run `npm install <path-to-this-repository>`
+-  Dependent model id's can be referenced by using a template string with the model name EG: `id: "${List}"`
 
-1. Run `slang generate`
+3. Run `npm install <path-to-this-repository>`
 
-1. Check `/__generated__` for all types and generated client
+4. Run `slang generate`
+
+5. Check `/__generated__` for all types and generated client
 
 ## What it is
 
