@@ -1,6 +1,5 @@
 import { CeramicClient } from '@ceramicnetwork/http-client'
 import chalk from 'chalk'
-import chalkAnimation from 'chalk-animation'
 // @ts-ignore
 import { Composite } from '@composedb/devtools'
 import {
@@ -28,15 +27,16 @@ import { typeFlag } from 'type-flag'
 // @ts-ignore
 import { fromString } from 'uint8arrays/from-string'
 import { fileURLToPath } from 'url'
+import { SLANG_MESSAGE } from '../index.js'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 
-const log = (str: string) => console.log(chalk.gray(str))
-const error = chalk.bold.red
-const animate = chalkAnimation.glitch
-
 export const ComposeDBFlags = typeFlag({
+  help: {
+    type: Boolean,
+    alias: 'h',
+  },
   outDir: {
     type: String,
     default: path.join(process.cwd(), '__generated__', 'composedb'),
@@ -87,7 +87,20 @@ export interface ComposeDBArgs {
   client: boolean
 }
 
+// const log = (str: string) => chalk.gray(str)
+const log = console.log
+const error = chalk.bold.red
+
 export class ComposeDB {
+  help = `
+
+  ${SLANG_MESSAGE}
+
+  Flags
+    --
+
+  `
+
   public static new(): ComposeDB {
     return new ComposeDB()
   }
@@ -107,9 +120,7 @@ export class ComposeDB {
   }
 
   private run = async (args: ComposeDBArgs) => {
-    log(
-      chalk.greenBright(`--COMPOSEDB-----------------------------------------`)
-    )
+    chalk.bold.green(`--COMPOSEDB-----------------------------------------`)
     log(`initializing directories...`)
     if (!existsSync(args.outDir)) {
       mkdirSync(args.outDir)
@@ -384,6 +395,7 @@ export * from './${path.join(args.clientFolder, 'index.js')}'
           ],
         },
       },
+      silent: true,
     }
     await generate(config, true)
     log(`codegen complete`)
@@ -434,7 +446,7 @@ export * from './${path.join(args.clientFolder, 'index.js')}'
                 relations[k].push(
                   `${f} ${foreignTable}Stream? @relation(name: "${fieldMeta[
                     'relation'
-                  ]['property'].toLowerCase()}", fields: [${
+                  ]['property'].toLowerCase()}", fields: [custom_${
                     fieldMeta['relation']['property']
                   }], references: [stream_id], map: "${f}-${
                     fieldMeta['relation']['property']
@@ -445,7 +457,9 @@ export * from './${path.join(args.clientFolder, 'index.js')}'
                     'relation'
                   ]['property'].toLowerCase()}")`
                 )
-                relations[k].push(`${fieldMeta['relation']['property']} String`)
+                relations[k].push(
+                  `custom_${fieldMeta['relation']['property']} String`
+                )
                 break
               default:
                 break
@@ -482,7 +496,8 @@ export * from './${path.join(args.clientFolder, 'index.js')}'
     if (!existsSync(clientDir)) {
       mkdirSync(clientDir)
     }
-    const templateDir = path.join(__dirname, 'templates')
+    console.log(process.cwd())
+    const templateDir = __dirname
     const serviceTemplate = await readFile(
       path.join(templateDir, 'service.ts.tmpl'),
       'utf-8'

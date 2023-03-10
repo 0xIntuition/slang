@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "type": "module",
   "scripts": {
-    "build": "tsc && cp -r src/composedb/templates dist/composedb",
+    "clean": "rimraf dist && rimraf __generated__ && rimraf bin",
+    "build": "yarn clean && tsup",
     "generate": "ts-node src/index.ts generate"
   },
   "main": "dist/index.js",
@@ -13,12 +14,13 @@
     "package.json"
   ],
   "devDependencies": {
-    "@composedb/devtools": "^0.3.1",
-    "@composedb/devtools-node": "^0.3.1",
+    "@composedb/devtools": "^0.4.3",
+    "@composedb/devtools-node": "^0.4.3",
     "@types/chalk-animation": "^1.6.1",
     "bun-types": "^0.5.0",
     "prettier": "^2.8.4",
     "prettier-plugin-organize-imports": "^3.2.2",
+    "rimraf": "^4.3.0",
     "tsup": "^6.6.3",
     "typescript": "^4.9.5"
   },

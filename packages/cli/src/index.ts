@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 import chalk from 'chalk'
 import dotenv from 'dotenv'
 import { existsSync, mkdirSync } from 'fs'
@@ -11,7 +10,7 @@ const ROOT_DIR = '__generated__'
 const log = console.log
 const error = chalk.bold.red
 
-const slang = function () {
+export const SLANG_MESSAGE = function () {
   /*
 
 
@@ -35,6 +34,8 @@ const commandArray = process.argv.slice(2)
 
 const help = `
 
+  ${SLANG_MESSAGE}
+
   slang <command> [<flags>]
 
   Commands:
@@ -47,7 +48,8 @@ async function main() {
   }
   if (!commandArray.length) log(help)
   if (commandArray[0] == 'generate') {
-    log(chalk.bold.greenBright(slang))
+    // const slang = chalkAnimation.rainbow(SLANG_MESSAGE)
+    // log(chalk.bold.greenBright(SLANG_MESSAGE))
     await ComposeDB.new().parse({ outDir: path.join(ROOT_DIR, 'composedb') })
   }
   error('unknown command')

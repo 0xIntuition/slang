@@ -15,11 +15,11 @@
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "types": ["node"],
-    "outDir": "dist"
+    "outDir": "bin"
   },
   "ts-node": {
     "esm": true
   },
   "include": ["src"],
-  "exclude": ["dist", "__generated__", "node_modules"]
+  "exclude": ["dist", "bin", "__generated__", "node_modules"]
 }
