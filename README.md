@@ -10,6 +10,8 @@
 
 _Off-Chain Data Storage Made Easy_
 
+*Disclaimer: This repo is under active development and can change whenever*
+
 ## How To Use
 
 1. Fill in a `.env` file with the following content (replace with your info):
