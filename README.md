@@ -11,8 +11,8 @@
 _Off-Chain Data Storage Made Easy_
 
 *Eth Denver Hackathon 2023: <br>
-Finalist <br>
-Bounty Winner: "Best application built using ComposeDB on Ceramic"*
+* Finalist <br>
+* Bounty Winner: "Best application built using ComposeDB on Ceramic"*
 
 *Disclaimer: This repo is under active development and can change whenever*
 
