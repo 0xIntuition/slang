@@ -1,14 +1,11 @@
-import chalk from 'chalk'
+#!/usr/bin/env node
+import { Command } from 'commander'
 import dotenv from 'dotenv'
-import { existsSync, mkdirSync } from 'fs'
-import path from 'path'
-import { ComposeDB } from './composedb/index.js'
+import pkgJSON from '../package.json' assert { type: 'json' }
+import generateCommand from './commands/generate/index.js'
+import { emphasis } from './utils/log.js'
+
 dotenv.config()
-
-const ROOT_DIR = '__generated__'
-
-const log = console.log
-const error = chalk.bold.red
 
 export const SLANG_MESSAGE = function () {
   /*
@@ -30,32 +27,13 @@ export const SLANG_MESSAGE = function () {
   .slice(3, 12)
   .join('\n')
 
-const commandArray = process.argv.slice(2)
+const slang = new Command()
 
-const help = `
+slang
+  .name('slang')
+  .addHelpText('beforeAll', emphasis(SLANG_MESSAGE))
+  .version(pkgJSON.version)
 
-  ${SLANG_MESSAGE}
+slang.addCommand(generateCommand())
 
-  slang <command> [<flags>]
-
-  Commands:
-  - generate (build the client based off of locally defined models)
-`
-
-async function main() {
-  if (!existsSync(ROOT_DIR)) {
-    mkdirSync(ROOT_DIR)
-  }
-  if (!commandArray.length) log(help)
-  if (commandArray[0] == 'generate') {
-    // const slang = chalkAnimation.rainbow(SLANG_MESSAGE)
-    // log(chalk.bold.greenBright(SLANG_MESSAGE))
-    await ComposeDB.new().parse({ outDir: path.join(ROOT_DIR, 'composedb') })
-  }
-  error('unknown command')
-}
-
-main().catch((error) => {
-  console.error(error)
-  process.exitCode = 1
-})
+slang.parse()

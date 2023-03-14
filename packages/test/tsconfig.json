@@ -2,7 +2,7 @@
   "compilerOptions": {
     "lib": ["ESNext"],
     "target": "ESNext",
-    "module": "ESNext",
+    "module": "NodeNext",
     "moduleResolution": "nodenext",
     "allowSyntheticDefaultImports": true,
     "strict": true,
@@ -16,5 +16,8 @@
     "skipLibCheck": true,
     "types": ["node"],
     "outDir": "bin"
+  },
+  "ts-node": {
+    "esm": true
   }
 }

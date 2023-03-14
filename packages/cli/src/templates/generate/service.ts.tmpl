@@ -1,5 +1,5 @@
 import type { ${MODEL_NAME}Stream } from '@prisma/client'
-import { ComposeDB } from './index.js'
+import { Client } from './index.js'
 import {
   Create${MODEL_NAME}Input,
   Create${MODEL_NAME}Mutation,
@@ -23,9 +23,9 @@ export type Parsed${MODEL_NAME}Stream<T extends ${MODEL_NAME}Stream> = T & {
 }
 
 export class ${MODEL_NAME}Service {
-  private _client: ComposeDB
+  private _client: Client
 
-  constructor(client: ComposeDB) {
+  constructor(client: Client) {
     this._client = client
   }
 

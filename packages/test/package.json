@@ -3,40 +3,22 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "cli": "slang"
+    "test": "ts-node scripts/testclient.ts",
+    "cli": "slang generate"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@0xintuition/slang": "file:../cli",
-    "@ceramicnetwork/common": "^2.8.0",
-    "@ceramicnetwork/http-client": "^2.5.0",
-    "@ceramicnetwork/streamid": "^2.10.0",
-    "@composedb/client": "^0.3.1",
-    "@composedb/types": "^0.3.1",
-    "@prisma/client": "^4.11.0",
-    "@remix-run/node": "^1.14.0",
-    "@remix-run/react": "^1.14.0",
-    "@remix-run/vercel": "^1.14.0",
-    "@vercel/node": "^2.6.2",
-    "dids": "^3.2.0",
-    "graphql": "^16.6.0",
-    "graphql-tag": "^2.12.6",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "zod": "^3.20.6"
+    "@0xintuition/slang-cli": "file:.yalc/@0xintuition/slang-cli",
+    "@prisma/client": "4.11.0",
+    "dotenv": "^16.0.3",
+    "ts-node": "^10.9.1"
   },
   "devDependencies": {
-    "@remix-run/dev": "^1.14.0",
-    "@remix-run/eslint-config": "^1.14.0",
-    "@remix-run/serve": "^1.14.0",
-    "@types/react": "^18.0.25",
-    "@types/react-dom": "^18.0.8",
-    "eslint": "^8.27.0",
-    "prisma": "^4.11.0",
+    "prisma": "4.11.0",
     "typescript": "^4.8.4"
   }
 }
