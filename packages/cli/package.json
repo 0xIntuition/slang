@@ -1,6 +1,6 @@
 {
   "name": "@0xintuition/slang-cli",
-  "version": "0.0.1-a",
+  "version": "0.0.1",
   "type": "module",
   "scripts": {
     "clean": "rimraf __generated__ && rimraf bin",
@@ -18,8 +18,6 @@
     "package.json"
   ],
   "devDependencies": {
-    "@composedb/devtools": "^0.4.3",
-    "@composedb/devtools-node": "^0.4.3",
     "@types/chalk-animation": "^1.6.1",
     "bun-types": "^0.5.0",
     "prettier": "^2.8.4",
@@ -29,18 +27,20 @@
     "typescript": "^4.9.5"
   },
   "peerDependencies": {
-    "prisma": "*",
-    "@prisma/client": "*",
     "@ceramicnetwork/common": "^2.23.0",
     "@ceramicnetwork/http-client": "^2.20.0",
     "@ceramicnetwork/streamid": "^2.14.0",
     "@composedb/client": "^0.4.3",
     "@composedb/types": "^0.4.3",
+    "@prisma/client": "*",
     "dids": "^4.0.0",
+    "prisma": "*",
     "zod": "^3.20.6"
   },
   "dependencies": {
     "@composedb/client": "^0.4.3",
+    "@composedb/devtools": "^0.4.3",
+    "@composedb/devtools-node": "^0.4.3",
     "@didtools/cacao": "^2.0.0",
     "@graphql-codegen/add": "^4.0.1",
     "@graphql-codegen/cli": "^3.2.1",

@@ -12,12 +12,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@0xintuition/slang-cli": "file:.yalc/@0xintuition/slang-cli",
     "@prisma/client": "4.11.0",
     "dotenv": "^16.0.3",
     "ts-node": "^10.9.1"
   },
   "devDependencies": {
+    "@0xintuition/slang-cli": "^0.0.1",
     "prisma": "4.11.0",
     "typescript": "^4.8.4"
   }

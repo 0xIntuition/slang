@@ -1,6 +1,0 @@
-type List @createModel(accountRelation: LIST, description: "Intuition List") {
-  name: String! @string(minLength: 1, maxLength: 150)
-  description: String @string(minLength: 1, maxLength: 300)
-  image: ImageSources
-  url: String @string(minLength: 1, maxLength: 150)
-}

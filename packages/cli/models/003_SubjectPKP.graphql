@@ -1,4 +1,0 @@
-type SubjectPKP @createModel(accountRelation: LIST, description: "Subject PKP Mapping") {
-  subject: String! @string(minLength: 1, maxLength: 150)
-  pkpId: String! @string(minLength: 1, maxLength: 300)
-}

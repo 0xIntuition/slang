@@ -1,8 +1,0 @@
-type User @createModel(accountRelation: SINGLE, description: "Intuition User Profile") {
-  name: String! @string(minLength: 1, maxLength: 150)
-  emoji: String @string(minLength: 1, maxLength: 5)
-  image: ImageSources
-  description: String @string(minLength: 0, maxLength: 420)
-  url: String @string(minLength: 0, maxLength: 240)
-  hello: String @string(minLength: 1, maxLength: 2)
-}
