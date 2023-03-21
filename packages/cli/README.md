@@ -19,7 +19,7 @@ Slang automatically builds the composites, deploys them, and handles generating 
 1.  Install Slang as a dependency
 
 ```sh
-npm install @0xintuition/slang-cli@0.0.1
+npm install @0xintuition/slang-cli
 ```
 
 2.  Fill in a `.env` file with the following content (replace with your info):

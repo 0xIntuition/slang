@@ -1,6 +1,6 @@
 {
   "name": "@0xintuition/slang-cli",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "type": "module",
   "scripts": {
     "clean": "rimraf __generated__ && rimraf bin",
@@ -14,7 +14,7 @@
   },
   "files": [
     "bin",
-    "templates",
+    "README.md",
     "package.json"
   ],
   "devDependencies": {
