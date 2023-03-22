@@ -45,7 +45,6 @@ importers:
       '@types/chalk-animation': ^1.6.1
       '@types/ejs': ^3.1.2
       bun-types: ^0.5.0
-      common^2.23.0: link:@ceramicnetwork/common^2.23.0
       detect-package-manager: ^2.0.1
       did-session: ^2.0.0
       dids: ^4.0.0
@@ -91,7 +90,6 @@ importers:
       '@oclif/plugin-plugins': 2.4.3_typescript@5.0.2
       '@stablelib/random': 1.0.2
       '@tuplo/envsubst': 1.15.2
-      common^2.23.0: link:@ceramicnetwork/common^2.23.0
       detect-package-manager: 2.0.1
       did-session: 2.0.0
       dids: 4.0.0
@@ -127,7 +125,9 @@ importers:
       '@composedb/client': ^0.4.3
       '@composedb/types': ^0.4.3
       '@prisma/client': ^4.11.0
+      did-session: ^2.0.0
       dids: ^4.0.0
+      dotenv: ^16.0.3
       graphql: ^16.6.0
       graphql-tag: ^2.12.6
       prisma: ^4.9.0
@@ -139,7 +139,9 @@ importers:
       '@ceramicnetwork/streamid': 2.14.0
       '@composedb/client': 0.4.3
       '@prisma/client': 4.11.0_prisma@4.11.0
+      did-session: 2.0.0
       dids: 4.0.0
+      dotenv: 16.0.3
       graphql: 16.6.0
       graphql-tag: 2.12.6_graphql@16.6.0
       ts-node: 10.9.1

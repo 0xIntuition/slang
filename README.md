@@ -8,7 +8,7 @@
          (_)           (__)    (__)
 ```
 
-_Off-Chain Data Storage Made Easy_
+_Web3 Scaffolding Made Easy_
 
 Eth Denver Hackathon 2023: <br>
 
@@ -17,4 +17,4 @@ Eth Denver Hackathon 2023: <br>
 
 _Disclaimer: This repo is under active development and can change whenever_
 
-Check out the READMEs packages in `packages/` for more information!
+Check out the [README in packages/cli](./packages/cli/README.md) for more info!

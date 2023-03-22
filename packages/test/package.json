@@ -5,8 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "ts-node scripts/testclient.ts",
-    "cli": "slang generate"
+    "test": "ts-node scripts/testclient.ts"
   },
   "keywords": [],
   "author": "",
@@ -17,7 +16,9 @@
     "@ceramicnetwork/streamid": "^2.14.0",
     "@composedb/client": "^0.4.3",
     "@prisma/client": "^4.11.0",
+    "did-session": "^2.0.0",
     "dids": "^4.0.0",
+    "dotenv": "^16.0.3",
     "graphql": "^16.6.0",
     "graphql-tag": "^2.12.6",
     "ts-node": "^10.9.1",

@@ -1,6 +1,6 @@
 {
   "name": "@0xintuition/slang-cli",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "web3 scaffolding made easy",
   "author": "mcclurejt @mcclurejt",
   "type": "module",
@@ -12,6 +12,14 @@
   "main": "dist/index.js",
   "repository": "0xintuition/slang",
   "bugs": "https://github.com/0xintuition/slang/issues",
+  "keywords": [
+    "intuition",
+    "lit",
+    "ceramic",
+    "composedb",
+    "web3",
+    "ipfs"
+  ],
   "engines": {
     "node": ">=16.0.0"
   },

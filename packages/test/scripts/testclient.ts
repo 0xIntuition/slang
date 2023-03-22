@@ -4,8 +4,8 @@ import { randomBytes } from '@stablelib/random'
 import { DIDSession, createDIDCacao, createDIDKey } from 'did-session'
 import dotenv from 'dotenv'
 
-import { definition } from '../__generated__/composites/index.js'
-import { Client } from '../__generated__/index.js'
+import { definition } from '../__generated__/composedb/composites/index.js'
+import { Client } from '../__generated__/composedb/index.js'
 
 dotenv.config()
 

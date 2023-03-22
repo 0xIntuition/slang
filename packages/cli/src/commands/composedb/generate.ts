@@ -429,7 +429,7 @@ datasource db {
       prismaSchema += `
     model ${k}Stream {
       stream_id String @id
-      ${dbProvider != 'sqlite' ? relations[k]?.join('\n') : ''}
+      ${dbProvider != 'sqlite' ? relations[k]?.join('\n') : ``}
       @@map("${definition.models[k].id}")
     }
     `
@@ -437,9 +437,19 @@ datasource db {
     // write the prisma schema
     await writeFile(prismaSchemaPath, prismaSchema)
 
+    // pull the db config to get the rest of the schema
     this.log('Wrote skeleton prisma.schema')
     this.log('Pulling prisma db config...')
     execSync(`${pmExecutor} prisma db pull --schema ${prismaSchemaPath}`)
+
+    // if sqlite, replace Int with BIGINT
+    if (dbProvider == 'sqlite') {
+      const contents = await readFile(prismaSchemaPath, 'utf-8')
+      let newContents = contents.replaceAll('Int', 'BigInt')
+      await writeFile(prismaSchemaPath, newContents)
+    }
+
+    // generate the prisma client
     this.log('Generating prisma client...')
     execSync(`${pmExecutor} prisma generate --schema ${prismaSchemaPath}`)
 
