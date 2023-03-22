@@ -1,43 +1,48 @@
 {
   "name": "@0xintuition/slang-cli",
-  "version": "0.0.2",
+  "version": "0.0.3",
+  "description": "web3 scaffolding made easy",
+  "author": "mcclurejt @mcclurejt",
   "type": "module",
-  "scripts": {
-    "clean": "rimraf __generated__ && rimraf bin",
-    "copy": "cp -r src/templates bin/src/templates",
-    "build": "bun run clean && tsc -p . && bun run copy",
-    "dev": "bun run build && node bin/src/index.js generate"
-  },
-  "main": "bin/src/index.js",
   "bin": {
-    "slang": "bin/src/index.js"
+    "slang": "./bin/run.js"
+  },
+  "homepage": "https://github.com/0xintuition/slang",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "repository": "0xintuition/slang",
+  "bugs": "https://github.com/0xintuition/slang/issues",
+  "engines": {
+    "node": ">=16.0.0"
   },
   "files": [
-    "bin",
-    "README.md",
-    "package.json"
+    "/bin",
+    "/dist",
+    "/README.md",
+    "/package.json",
+    "/npm-shrinkwrap.json",
+    "/oclif.manifest.json"
   ],
-  "devDependencies": {
-    "@types/chalk-animation": "^1.6.1",
-    "bun-types": "^0.5.0",
-    "prettier": "^2.8.4",
-    "prettier-plugin-organize-imports": "^3.2.2",
-    "rimraf": "^4.3.0",
-    "tsup": "^6.6.3",
-    "typescript": "^4.9.5"
+  "types": "dist/index.d.ts",
+  "oclif": {
+    "bin": "slang",
+    "dirname": "slang",
+    "commands": "./dist/commands",
+    "plugins": [
+      "@oclif/plugin-help",
+      "@oclif/plugin-plugins"
+    ],
+    "topicSeparator": ":",
+    "topics": {
+      "composedb": {
+        "description": "Perform ComposeDB Operations"
+      }
+    }
   },
-  "peerDependencies": {
+  "dependencies": {
     "@ceramicnetwork/common": "^2.23.0",
     "@ceramicnetwork/http-client": "^2.20.0",
     "@ceramicnetwork/streamid": "^2.14.0",
-    "@composedb/client": "^0.4.3",
-    "@composedb/types": "^0.4.3",
-    "@prisma/client": "*",
-    "dids": "^4.0.0",
-    "prisma": "*",
-    "zod": "^3.20.6"
-  },
-  "dependencies": {
     "@composedb/client": "^0.4.3",
     "@composedb/devtools": "^0.4.3",
     "@composedb/devtools-node": "^0.4.3",
@@ -45,6 +50,7 @@
     "@graphql-codegen/add": "^4.0.1",
     "@graphql-codegen/cli": "^3.2.1",
     "@graphql-codegen/plugin-helpers": "^4.0.0",
+    "@graphql-codegen/typescript": "^3.0.2",
     "@graphql-codegen/typescript-operations": "^3.0.1",
     "@graphql-tools/graphql-file-loader": "^7.5.16",
     "@graphql-tools/load": "^7.8.12",
@@ -52,29 +58,46 @@
     "@lit-protocol/constants": "^2.1.43",
     "@lit-protocol/contracts-sdk": "2.1.30",
     "@lit-protocol/lit-node-client": "^2.1.43",
-    "@prisma/client": "^4.11.0",
+    "@oclif/core": "^2",
+    "@oclif/plugin-help": "^5",
+    "@oclif/plugin-plugins": "^2.4.2",
     "@stablelib/random": "^1.0.2",
     "@tuplo/envsubst": "^1.15.2",
-    "alchemy-sdk": "^2.4.3",
-    "chalk": "4.1.2",
-    "chalk-animation": "^2.0.3",
-    "commander": "^10.0.0",
+    "detect-package-manager": "^2.0.1",
     "did-session": "^2.0.0",
     "dids": "^4.0.0",
     "dotenv": "^16.0.3",
+    "ejs": "^3.1.9",
     "ethers": "^5.7.0",
+    "figlet": "^1.5.2",
     "google-auth-library": "^8.7.0",
     "graphql": "^16.6.0",
     "graphql-codegen-typescript-validation-schema": "^0.7.1",
     "graphql-tag": "^2.12.6",
+    "key-did-provider-ed25519": "^3.0.0",
+    "key-did-resolver": "^3.0.0",
     "punycode": "^2.3.0",
-    "uint8arrays": "3.1.1",
+    "uint8arrays": "^4.0.3",
     "zod": "^3.20.6"
   },
-  "resolutions": {
-    "uint8arrays": "^3.0.0",
-    "graphql": "^16.6.0",
-    "**/graphql": "^16.6.0"
+  "devDependencies": {
+    "@composedb/types": "^0.4.3",
+    "@types/chalk-animation": "^1.6.1",
+    "@types/ejs": "^3.1.2",
+    "bun-types": "^0.5.0",
+    "prettier": "^2.8.4",
+    "prettier-plugin-organize-imports": "^3.2.2",
+    "shx": "^0.3.3",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.0.2"
   },
-  "preinstall": "npx npm-force-resolutions"
+  "scripts": {
+    "clean": "shx rm -rf dist",
+    "copy": "cp -r src/templates bin/src/templates",
+    "build": "pnpm run clean && tsc -b",
+    "dev": "pnpm run build && bin/dev.js",
+    "run": "NODE_ENV=production pnpm run build && node bin/run.js",
+    "prepack": "pnpm run build && oclif manifest && oclif readme",
+    "postpack": "shx rm -f oclif.manifest.json"
+  }
 }

@@ -1,10 +1,12 @@
-import { Client } from '../__generated__/index.js'
-import dotenv from 'dotenv'
 import { Cacao, CacaoBlock, SiweMessage } from '@didtools/cacao'
 import { Wallet } from '@ethersproject/wallet'
 import { randomBytes } from '@stablelib/random'
-import { createDIDCacao, createDIDKey, DIDSession } from 'did-session'
+import { DIDSession, createDIDCacao, createDIDKey } from 'did-session'
+import dotenv from 'dotenv'
+
 import { definition } from '../__generated__/composites/index.js'
+import { Client } from '../__generated__/index.js'
+
 dotenv.config()
 
 export async function createRandomSession(): Promise<DIDSession> {
@@ -39,8 +41,13 @@ export async function createRandomSession(): Promise<DIDSession> {
 
 async function main() {
   const session = await createRandomSession()
-  const client = new Client({ ceramicURL: process.env.COMPOSEDB_NODE_URL!, did: session.did })
-  const resp = await client.subjectPKP.create({ content: { pkpId: 'asdfasdfasdf', subject: 'asdfasdfasdf' } })
+  const client = new Client({
+    ceramicURL: process.env.COMPOSEDB_NODE_URL!,
+    did: session.did,
+  })
+  const resp = await client.subjectPKP.create({
+    content: { pkpId: 'asdfasdfasdf', subject: 'asdfasdfasdf' },
+  })
   console.log(`created pkp with streamid ${resp.createSubjectPKP?.document.id}`)
   const users = await client.prisma.subjectPKPStream.findMany()
   users.map((u) => console.log(u.stream_content))

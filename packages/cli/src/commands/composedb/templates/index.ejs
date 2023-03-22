@@ -9,7 +9,7 @@ import { DocumentNode } from 'graphql'
 import { AnyZodObject } from 'zod'
 import { definition } from '../composites/index.js'
 import { Expand, removeNullFields } from './utils.js'
-${SERVICE_IMPORTS}
+<%= serviceImports %>
 
 export interface Stream {
   stream_id: string
@@ -43,7 +43,7 @@ export class Client {
   readonly ceramic: CeramicClient
   readonly composedb: ComposeClient
 
-  ${SERVICE_PROPERTIES}
+  <%= serviceProperties %>
 
   private _did = new DID()
   private _errors: Error[] = []
@@ -57,7 +57,7 @@ export class Client {
     })
     this.did = params.did || new DID()
 
-    ${SERVICE_CONSTRUCTOR}
+    <%= serviceConstructors %>
   }
 
   get did() {

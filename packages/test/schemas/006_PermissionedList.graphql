@@ -1,7 +1,8 @@
 type List @loadModel(id: "${List}") {
   id: ID!
 }
-type PermissionedList @createModel(accountRelation: LIST, description: "Intuition Permissioned List") {
+type PermissionedList
+  @createModel(accountRelation: LIST, description: "Intuition Permissioned List") {
   name: String! @string(minLength: 1, maxLength: 150)
   listId: StreamID! @documentReference(model: "List")
   list: List @relationDocument(property: "listId")

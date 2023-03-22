@@ -104,5 +104,4 @@ dist
 .tern-port
 __generated__
 
-bin
 schema.prisma
