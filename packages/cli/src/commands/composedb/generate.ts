@@ -440,7 +440,7 @@ datasource db {
     // pull the db config to get the rest of the schema
     this.log('Wrote skeleton prisma.schema')
     this.log('Pulling prisma db config...')
-    execSync(`${pmExecutor} prisma db pull --schema ${prismaSchemaPath}`)
+    execSync(`prisma db pull --schema ${prismaSchemaPath}`)
 
     // if sqlite, replace Int with BIGINT
     if (dbProvider == 'sqlite') {
@@ -451,7 +451,7 @@ datasource db {
 
     // generate the prisma client
     this.log('Generating prisma client...')
-    execSync(`${pmExecutor} prisma generate --schema ${prismaSchemaPath}`)
+    execSync(`prisma generate --schema ${prismaSchemaPath}`)
 
     /**
      *  CLIENT
